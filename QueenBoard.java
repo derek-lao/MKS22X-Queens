@@ -19,14 +19,32 @@ public class QueenBoard{
     }
   }
 
+  private boolean outOfBounds(int r,int c){
+    return (r<0 || c<0 || r>=board.length || c>=board[r].length);
+  }
+
   private boolean addQueen(int r, int c){
-    board[r][c]=1;
-    return true;
+    if(outOfBounds(r,c))
+    {
+      return false;
+    }
+    else
+    {
+      board[r][c]=1;
+      return true;
+    }
   }
 
   private boolean removeQueen(int r, int c){
-    board[r][c]=0;
-    return true;
+    if(outOfBounds(r,c))
+    {
+      return false;
+    }
+    else
+    {
+      board[r][c]=0;
+      return true;
+    }
   }
 
   /**
