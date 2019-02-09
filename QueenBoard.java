@@ -23,7 +23,7 @@ public class QueenBoard{
     return (r<0 || c<0 || r>=board.length || c>=board.length);
   }
 
-  private boolean solveHelper(int[][] data,int currentRow,int currentColumn,){
+  private boolean solveHelper(int[][] data,int currentRow,int currentColumn){
 
   }
 
@@ -34,29 +34,36 @@ public class QueenBoard{
     }
     else
     {
-      for(int n=0;n<board.length;n++)
+      if(board[r][c]==0)
       {
-        board[r][n]++;
-        board[n][c]++;
+        for(int n=0;n<board.length;n++)
+        {
+          board[r][n]++;
+          board[n][c]++;
+        }
+        int p=r;
+        int q=c;
+        while(p<board.length && q<board.length)
+        {
+          board[p][q]++;
+          p++;
+          q++;
+        }
+        p=r;
+        q=c;
+        while(p>-1&&q>-1)
+        {
+          board[p][q]++;
+          p--;
+          q--;
+        }
+        board[r][c]-=3;
+        return true;
       }
-      int p=r;
-      int q=c;
-      while(p<board.length && q<board.length)
+      else
       {
-        board[p][q]++;
-        p++;
-        q++;
+        return false;
       }
-      p=r;
-      q=c;
-      while(p>-1&&q>-1)
-      {
-        board[p][q]++;
-        p--;
-        q--;
-      }
-      board[r][c]-=3;
-      return true;
     }
   }
 
@@ -67,29 +74,36 @@ public class QueenBoard{
     }
     else
     {
-      for(int n=0;n<board.length;n++)
+      if(board[r][c]==1)
       {
-        board[r][n]--;
-        board[n][c]--;
+        for(int n=0;n<board.length;n++)
+        {
+          board[r][n]--;
+          board[n][c]--;
+        }
+        int p=r;
+        int q=c;
+        while(p<board.length && q<board.length)
+        {
+          board[p][q]--;
+          p++;
+          q++;
+        }
+        p=r;
+        q=c;
+        while(p>-1&&q>-1)
+        {
+          board[p][q]--;
+          p--;
+          q--;
+        }
+        board[r][c]+=3;
+        return true;
       }
-      int p=r;
-      int q=c;
-      while(p<board.length && q<board.length)
+      else
       {
-        board[p][q]--;
-        p++;
-        q++;
+        return false;
       }
-      p=r;
-      q=c;
-      while(p>-1&&q>-1)
-      {
-        board[p][q]--;
-        p--;
-        q--;
-      }
-      board[r][c]+=3;
-      return true;
     }
   }
 
