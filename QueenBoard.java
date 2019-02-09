@@ -10,9 +10,9 @@ public class QueenBoard{
    */
   public QueenBoard(int size){
     board=new int[size][size];
-    for(int r=0;i<board.length;i++)
+    for(int r=0;r<board.length;r++)
     {
-      for(int c=0;c<board[i].length;c++)
+      for(int c=0;c<board[r].length;c++)
       {
         board[r][c]=0;
       }
@@ -20,11 +20,13 @@ public class QueenBoard{
   }
 
   private boolean addQueen(int r, int c){
-    board[][]
+    board[r][c]=1;
+    return true;
   }
 
   private boolean removeQueen(int r, int c){
-
+    board[r][c]=0;
+    return true;
   }
 
   /**
