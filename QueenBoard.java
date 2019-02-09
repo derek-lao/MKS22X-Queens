@@ -23,6 +23,10 @@ public class QueenBoard{
     return (r<0 || c<0 || r>=board.length || c>=board[r].length);
   }
 
+  private boolean solveHelper(int[][] data,int currentRow,int currentColumn,){
+
+  }
+
   private boolean addQueen(int r, int c){
     if(outOfBounds(r,c))
     {
@@ -30,7 +34,12 @@ public class QueenBoard{
     }
     else
     {
-      board[r][c]=1;
+      for(int n=0;n<board.length;n++)
+      {
+        board[r][n]++;
+        board[n][c]++;
+        board[r][c]--;
+      }
       return true;
     }
   }
@@ -42,7 +51,12 @@ public class QueenBoard{
     }
     else
     {
-      board[r][c]=0;
+      for(int n=0;n<board.length;n++)
+      {
+        board[r][n]--;
+        board[n][c]--;
+        board[r][c]++;
+      }
       return true;
     }
   }
