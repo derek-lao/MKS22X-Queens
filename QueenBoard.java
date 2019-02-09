@@ -12,7 +12,7 @@ public class QueenBoard{
     board=new int[size][size];
     for(int r=0;r<board.length;r++)
     {
-      for(int c=0;c<board[r].length;c++)
+      for(int c=0;c<board.length;c++)
       {
         board[r][c]=0;
       }
@@ -20,7 +20,7 @@ public class QueenBoard{
   }
 
   private boolean outOfBounds(int r,int c){
-    return (r<0 || c<0 || r>=board.length || c>=board[r].length);
+    return (r<0 || c<0 || r>=board.length || c>=board.length);
   }
 
   private boolean solveHelper(int[][] data,int currentRow,int currentColumn,){
@@ -38,8 +38,24 @@ public class QueenBoard{
       {
         board[r][n]++;
         board[n][c]++;
-        board[r][c]--;
       }
+      int p=r;
+      int q=c;
+      while(p<board.length && q<board.length)
+      {
+        board[p][q]++;
+        p++;
+        q++;
+      }
+      p=r;
+      q=c;
+      while(p>-1&&q>-1)
+      {
+        board[p][q]++;
+        p--;
+        q--;
+      }
+      board[r][c]-=3;
       return true;
     }
   }
@@ -55,8 +71,24 @@ public class QueenBoard{
       {
         board[r][n]--;
         board[n][c]--;
-        board[r][c]++;
       }
+      int p=r;
+      int q=c;
+      while(p<board.length && q<board.length)
+      {
+        board[p][q]--;
+        p++;
+        q++;
+      }
+      p=r;
+      q=c;
+      while(p>-1&&q>-1)
+      {
+        board[p][q]--;
+        p--;
+        q--;
+      }
+      board[r][c]+=3;
       return true;
     }
   }
