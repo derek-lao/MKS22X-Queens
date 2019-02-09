@@ -1,16 +1,26 @@
 public class QueenBoard{
   private int[][] board;
 
+  // if a square has 0, it is empty. If it has 1, it has queen. I will
+  // decide later how to backtrack with numbers
+
   /**
    * @param size The side size of a board. Since the board is supposed
    * to be square, it will return a size x size board.
    */
   public QueenBoard(int size){
     board=new int[size][size];
+    for(int r=0;i<board.length;i++)
+    {
+      for(int c=0;c<board[i].length;c++)
+      {
+        board[r][c]=0;
+      }
+    }
   }
 
   private boolean addQueen(int r, int c){
-
+    board[][]
   }
 
   private boolean removeQueen(int r, int c){
@@ -48,6 +58,6 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public int countSolutions(){
-    
+
   }
 }
