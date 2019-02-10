@@ -23,8 +23,27 @@ public class QueenBoard{
     return (r<0 || c<0 || r>=board.length || c>=board.length);
   }
 
-  private boolean solveHelper(int[][] data,int currentRow,int currentColumn){
+  private int[] answers=new int[8];
 
+  private boolean solveHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
+    if(currentRow<data.length)
+    {
+      if(currentColumn<data.length)
+      {
+        if(addQueen(currentRow,currentColumn))
+        {
+          answers[currentRow]=currentColumn+1;
+          return solveHelper(data,currentRow+1,currentColumn+2,answers);
+        }
+        else
+        {
+          return solveHelper(data,currentRow,currentColumn+1,answers);
+        }
+      }
+      removeQueen(currentRow-1,answers[currentRow-1]);
+      answers[currentRow-1]=0;
+      return solveHelper(data,currentRow-1,0,answers);
+    }
   }
 
   private boolean addQueen(int r, int c){
