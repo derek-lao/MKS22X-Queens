@@ -23,7 +23,7 @@ public class QueenBoard{
     return (r<0 || c<0 || r>=board.length || c>=board.length);
   }
 
-  // the list of answers will have numbers from 1 to 8. 
+  // the list of answers will have numbers from 0 to 7.
   private int[] answers=new int[8];
 
   private boolean solveHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
@@ -42,7 +42,7 @@ public class QueenBoard{
         }
       }
       removeQueen(currentRow-1,answers[currentRow-1]);
-      answers[currentRow-1]=0;
+      answers[currentRow-1]=100;
       return solveHelper(data,currentRow-1,0,answers);
     }
   }
@@ -150,7 +150,11 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public boolean solve(){
-
+    for(int i=0;i<answers.length;i++)
+    {
+      answers[i]=100;
+    }
+    return solveHelper(board,0,0,answers);
   }
 
   /**
