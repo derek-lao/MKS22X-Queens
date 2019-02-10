@@ -23,6 +23,7 @@ public class QueenBoard{
     return (r<0 || c<0 || r>=board.length || c>=board.length);
   }
 
+  // the list of answers will have numbers from 1 to 8. 
   private int[] answers=new int[8];
 
   private boolean solveHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
@@ -33,7 +34,7 @@ public class QueenBoard{
         if(addQueen(currentRow,currentColumn))
         {
           answers[currentRow]=currentColumn+1;
-          return solveHelper(data,currentRow+1,currentColumn+2,answers);
+          return solveHelper(data,currentRow+1,0,answers);
         }
         else
         {
