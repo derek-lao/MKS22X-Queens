@@ -1,5 +1,12 @@
+import java.util.*;
+
 public class QueenBoard{
   private int[][] board;
+
+  // the list of answers will have numbers from 0 to 7.
+  private int[] answers=new int[board.length];
+  private int count;
+  private ArrayList<int[]> listAnswers=new ArrayList<int[]>();//ArrayList of answers
 
   // if a square has 0, it is empty. If it has 1, it has queen. I will
   // decide later how to backtrack with numbers
@@ -23,27 +30,36 @@ public class QueenBoard{
     return (r<0 || c<0 || r>=board.length || c>=board.length);
   }
 
-  // the list of answers will have numbers from 0 to 7.
-  private int[] answers=new int[8];
-
-  private boolean solveHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
-    if(currentRow<data.length)
+  private void solveHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
+    if(currentRow<data.length && currentRow>-1)
     {
       if(currentColumn<data.length)
       {
         if(addQueen(currentRow,currentColumn))
         {
           answers[currentRow]=currentColumn+1;
-          return solveHelper(data,currentRow+1,0,answers);
+          solveHelper(data,currentRow+1,0,answers);
         }
         else
         {
-          return solveHelper(data,currentRow,currentColumn+1,answers);
+          solveHelper(data,currentRow,currentColumn+1,answers);
         }
       }
-      removeQueen(currentRow-1,answers[currentRow-1]);
-      answers[currentRow-1]=100;
-      return solveHelper(data,currentRow-1,0,answers);
+      else
+      {
+        int prevAnswer=answers[currentRow-1];
+        removeQueen(currentRow-1,prevAnswer);
+        answers[currentRow-1]=-1;
+        solveHelper(data,currentRow-1,prevAnswer+1,answers);
+      }
+    }
+    else if(currentRow>-1)
+    {
+      listAnswers.add(listY);
+      int prevAnswer=answers[currentRow-1];
+      removeQueen(currentRow-1,prevAnswer);
+      answers[currentRow-1]=-1;
+      solveHelper(data,currentRow-1,prevAnswer+1,answers);
     }
   }
 
@@ -149,12 +165,25 @@ public class QueenBoard{
   *        true when the board is solveable, and leaves the board in a solved state
   *@throws IllegalStateException when the board starts with any non-zero value
   */
-  public boolean solve(){
+  public boolean solve() throws IllegalStateException{
     for(int i=0;i<answers.length;i++)
     {
-      answers[i]=100;
+      answers[i]=-1;
     }
-    return solveHelper(board,0,0,answers);
+    solveHelper(board,0,0,answers);
+    int[] firstAnswer=listAnswers.get(0);
+    for(int i=0;i<firstAnswer.length;i++)
+    {
+      if(firstAnswer[i]!=100)
+      {
+        continue;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
