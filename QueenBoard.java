@@ -93,7 +93,21 @@ public class QueenBoard{
           p--;
           q--;
         }
-        board[r][c]-=3;
+        while(p<board.length && q>-1)
+        {
+          board[p][q]++;
+          p++;
+          q--;
+        }
+        p=r;
+        q=c;
+        while(p>-1 && q<board.length)
+        {
+          board[p][q]++;
+          p--;
+          q++;
+        }
+        board[r][c]-=5;
         return true;
       }
       else
@@ -133,7 +147,21 @@ public class QueenBoard{
           p--;
           q--;
         }
-        board[r][c]+=3;
+        while(p<board.length && q>-1)
+        {
+          board[p][q]--;
+          p++;
+          q--;
+        }
+        p=r;
+        q=c;
+        while(p>-1 && q<board.length)
+        {
+          board[p][q]--;
+          p--;
+          q++;
+        }
+        board[r][c]+=5;
         return true;
       }
       else
@@ -156,7 +184,26 @@ public class QueenBoard{
   *excludes the character up to the *)
   */
   public String toString(){
-
+    String stuff="";
+    for(int i=0;i<board.length;i++)
+    {
+      board[i][answers[i]]=-10;
+    }
+    for(int r=0;r<board.length;r++)
+    {
+      for(int c=0;c<board.length;c++)
+      {
+        if(board[r][c]!=-10)
+        {
+          stuff+="Q ";
+        }
+        else
+        {
+          stuff+="_ ";
+        }
+      }
+    }
+    return stuff;
   }
 
 
