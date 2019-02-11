@@ -4,7 +4,7 @@ public class QueenBoard{
   private int[][] board;
 
   // the list of answers will have numbers from 0 to 7.
-  private int[] answers=new int[board.length];
+  private int[] answers;
   private int count;
   private ArrayList<int[]> listAnswers=new ArrayList<int[]>();//ArrayList of answers
 
@@ -24,6 +24,7 @@ public class QueenBoard{
         board[r][c]=0;
       }
     }
+    answers=new int[board.length];
   }
 
   private boolean outOfBounds(int r,int c){
@@ -31,13 +32,14 @@ public class QueenBoard{
   }
 
   private void solveHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
+    // System.out.println(this.toString());
     if(currentRow<data.length && currentRow>-1)
     {
       if(currentColumn<data.length)
       {
         if(addQueen(currentRow,currentColumn))
         {
-          answers[currentRow]=currentColumn+1;
+          answers[currentRow]=currentColumn;
           solveHelper(data,currentRow+1,0,answers);
         }
         else
@@ -45,7 +47,7 @@ public class QueenBoard{
           solveHelper(data,currentRow,currentColumn+1,answers);
         }
       }
-      else
+      else if(currentRow>0)
       {
         int prevAnswer=answers[currentRow-1];
         removeQueen(currentRow-1,prevAnswer);
@@ -53,13 +55,47 @@ public class QueenBoard{
         solveHelper(data,currentRow-1,prevAnswer+1,answers);
       }
     }
-    else if(currentRow>-1)
+    if(currentRow>=data.length)
     {
       listAnswers.add(listY);
       int prevAnswer=answers[currentRow-1];
       removeQueen(currentRow-1,prevAnswer);
       answers[currentRow-1]=-1;
       solveHelper(data,currentRow-1,prevAnswer+1,answers);
+    }
+    System.out.println(this.toString());
+  }
+
+  private void countHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
+    if(currentRow<data.length && currentRow>-1)
+    {
+      if(currentColumn<data.length)
+      {
+        if(addQueen(currentRow,currentColumn))
+        {
+          answers[currentRow]=currentColumn;
+          countHelper(data,currentRow+1,0,answers);
+        }
+        else
+        {
+          countHelper(data,currentRow,currentColumn+1,answers);
+        }
+      }
+      else if(currentRow>0)
+      {
+        int prevAnswer=answers[currentRow-1];
+        removeQueen(currentRow-1,prevAnswer);
+        answers[currentRow-1]=-1;
+        countHelper(data,currentRow-1,prevAnswer+1,answers);
+      }
+    }
+    if(currentRow>=data.length)
+    {
+      listAnswers.add(listY);
+      int prevAnswer=answers[currentRow-1];
+      removeQueen(currentRow-1,prevAnswer);
+      answers[currentRow-1]=-1;
+      countHelper(data,currentRow-1,prevAnswer+1,answers);
     }
   }
 
@@ -93,6 +129,8 @@ public class QueenBoard{
           p--;
           q--;
         }
+        p=r;
+        q=c;
         while(p<board.length && q>-1)
         {
           board[p][q]++;
@@ -147,6 +185,8 @@ public class QueenBoard{
           p--;
           q--;
         }
+        p=r;
+        q=c;
         while(p<board.length && q>-1)
         {
           board[p][q]--;
@@ -187,13 +227,16 @@ public class QueenBoard{
     String stuff="";
     for(int i=0;i<board.length;i++)
     {
-      board[i][answers[i]]=-10;
+      if(answers[i]<board.length&&answers[i]>=0)
+      {
+        board[i][answers[i]]=-10;
+      }
     }
     for(int r=0;r<board.length;r++)
     {
       for(int c=0;c<board.length;c++)
       {
-        if(board[r][c]!=-10)
+        if(board[r][c]==-10)
         {
           stuff+="Q ";
         }
@@ -202,6 +245,7 @@ public class QueenBoard{
           stuff+="_ ";
         }
       }
+      stuff+="\n";
     }
     return stuff;
   }
@@ -213,6 +257,18 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public boolean solve() throws IllegalStateException{
+    for(int r=0;r<board.length;r++)
+    {
+      for(int c=0;c<board.length;c++)
+      {
+        if(board[r][c]!=0)
+        {
+          r=board.length;
+          c=board.length;
+          throw new IllegalStateException();
+        }
+      }
+    }
     for(int i=0;i<answers.length;i++)
     {
       answers[i]=-1;
@@ -238,6 +294,18 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public int countSolutions() throws IllegalStateException{
+    for(int r=0;r<board.length;r++)
+    {
+      for(int c=0;c<board.length;c++)
+      {
+        if(board[r][c]!=0)
+        {
+          r=board.length;
+          c=board.length;
+          throw new IllegalStateException();
+        }
+      }
+    }
     for(int i=0;i<answers.length;i++)
     {
       answers[i]=-1;
