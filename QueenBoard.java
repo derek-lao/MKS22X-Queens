@@ -190,7 +190,12 @@ public class QueenBoard{
   *@return the number of solutions found, and leaves the board filled with only 0's
   *@throws IllegalStateException when the board starts with any non-zero value
   */
-  public int countSolutions(){
-
+  public int countSolutions() throws IllegalStateException{
+    for(int i=0;i<answers.length;i++)
+    {
+      answers[i]=-1;
+    }
+    solveHelper(board,0,0,answers);
+    return listAnswers.size();
   }
 }
