@@ -73,6 +73,7 @@ public class QueenBoard{
   }
 
   private void countHelper(int[][] data,int currentRow,int currentColumn,int num){
+    // System.out.println(this.toString());
     if(currentRow<data.length && currentRow>-1)
     {
       if(currentColumn<data.length)
@@ -94,12 +95,17 @@ public class QueenBoard{
         answers[currentRow-1]=-1;
         countHelper(data,currentRow-1,prevAnswer+1,num);
       }
+      // else
+      // {
+      //   return num;
+      // }
     }
-    if(currentRow>=data.length)
+    else
     {
       int prevAnswer=answers[currentRow-1];
       removeQueen(currentRow-1,prevAnswer);
       answers[currentRow-1]=-1;
+      count++;
       countHelper(data,currentRow-1,prevAnswer+1,num+1);
     }
   }
@@ -286,6 +292,7 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public int countSolutions() throws IllegalStateException{
+
     for(int r=0;r<board.length;r++)
     {
       for(int c=0;c<board.length;c++)
@@ -299,11 +306,7 @@ public class QueenBoard{
       }
     }
     count=0;
-    for(int i=0;i<answers.length;i++)
-    {
-      answers[i]=-1;
-    }
-    countHelper(board,0,0,count);
+    countHelper(board,0,0,0);
     return count;
   }
 
