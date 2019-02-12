@@ -72,7 +72,7 @@ public class QueenBoard{
     }
   }
 
-  private void countHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
+  private void countHelper(int[][] data,int currentRow,int currentColumn,int num){
     if(currentRow<data.length && currentRow>-1)
     {
       if(currentColumn<data.length)
@@ -80,11 +80,11 @@ public class QueenBoard{
         if(addQueen(currentRow,currentColumn))
         {
           answers[currentRow]=currentColumn;
-          countHelper(data,currentRow+1,0,answers);
+          countHelper(data,currentRow+1,0,num);
         }
         else
         {
-          countHelper(data,currentRow,currentColumn+1,answers);
+          countHelper(data,currentRow,currentColumn+1,num);
         }
       }
       else if(currentRow>0)
@@ -92,16 +92,15 @@ public class QueenBoard{
         int prevAnswer=answers[currentRow-1];
         removeQueen(currentRow-1,prevAnswer);
         answers[currentRow-1]=-1;
-        countHelper(data,currentRow-1,prevAnswer+1,answers);
+        countHelper(data,currentRow-1,prevAnswer+1,num);
       }
     }
     if(currentRow>=data.length)
     {
-      count++;
       int prevAnswer=answers[currentRow-1];
       removeQueen(currentRow-1,prevAnswer);
       answers[currentRow-1]=-1;
-      countHelper(data,currentRow-1,prevAnswer+1,answers);
+      countHelper(data,currentRow-1,prevAnswer+1,num+1);
     }
   }
 
@@ -304,7 +303,17 @@ public class QueenBoard{
     {
       answers[i]=-1;
     }
-    countHelper(board,0,0,answers);
+    countHelper(board,0,0,count);
     return count;
+  }
+
+  public void clear(){
+    for(int r=0;r<board.length;r++)
+    {
+      for(int c=0;c<board.length;c++)
+      {
+        board[r][c]=0;
+      }
+    }
   }
 }

@@ -3,14 +3,23 @@ public class DerekDriver{
   {
     QueenBoard thing=new QueenBoard(3);
     thing.solve();
-    thing.countSolutions();
     System.out.println(thing.toString());
+    thing.clear();
+    thing.countSolutions();
     System.out.println(thing.countSolutions());
+
+    QueenBoard y=new QueenBoard(4);
+    y.solve();
+    System.out.println(y.toString());
+    y.clear();
+    y.countSolutions();
+    System.out.println(y.countSolutions());
 
     QueenBoard actual=new QueenBoard(8);
     actual.solve();
-    actual.countSolutions();
     System.out.println(actual.toString());
+    actual.clear();
+    actual.countSolutions();
     System.out.println(actual.countSolutions());
   }
 }
