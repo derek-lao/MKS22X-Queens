@@ -5,7 +5,7 @@ public class QueenBoard{
 
   // the list of answers will have numbers from 0 to 7.
   private int[] answers;
-  private int count;
+  // private int count;
   // private ArrayList<int[]> listAnswers=new ArrayList<int[]>();//ArrayList of answers
 
   // if a square has 0, it is empty. If it has 1, it has queen. I will
@@ -61,19 +61,12 @@ public class QueenBoard{
     }
     else
     {
-      for(int i=0;i<answers.length;i++)
-      {
-        if(answers[i]==-1)
-        {
-          return false;
-        }
-      }
       return true;
     }
   }
 
   private void countHelper(int[][] data,int currentRow,int currentColumn,int num){
-    // System.out.println(this.toString());
+    // System.out.println(count);
     if(currentRow<data.length && currentRow>-1)
     {
       if(currentColumn<data.length)
@@ -105,7 +98,7 @@ public class QueenBoard{
       int prevAnswer=answers[currentRow-1];
       removeQueen(currentRow-1,prevAnswer);
       answers[currentRow-1]=-1;
-      count++;
+      // count++;
       countHelper(data,currentRow-1,prevAnswer+1,num+1);
     }
   }
@@ -292,7 +285,6 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public int countSolutions() throws IllegalStateException{
-
     for(int r=0;r<board.length;r++)
     {
       for(int c=0;c<board.length;c++)
@@ -305,8 +297,8 @@ public class QueenBoard{
         }
       }
     }
-    count=0;
-    countHelper(board,0,0,0);
+    int count=0;
+    countHelper(board,0,0,count);
     return count;
   }
 
