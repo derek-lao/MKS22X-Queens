@@ -3,6 +3,14 @@ public class DerekDriver{
   {
     QueenBoard thing=new QueenBoard(3);
     thing.solve();
-    System.out.println(thing);
+    thing.countSolutions();
+    System.out.println(thing.toString());
+    System.out.println(thing.countSolutions());
+
+    QueenBoard actual=new QueenBoard(8);
+    actual.solve();
+    actual.countSolutions();
+    System.out.println(actual.toString());
+    System.out.println(actual.countSolutions());
   }
 }

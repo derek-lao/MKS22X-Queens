@@ -6,7 +6,7 @@ public class QueenBoard{
   // the list of answers will have numbers from 0 to 7.
   private int[] answers;
   private int count;
-  private ArrayList<int[]> listAnswers=new ArrayList<int[]>();//ArrayList of answers
+  // private ArrayList<int[]> listAnswers=new ArrayList<int[]>();//ArrayList of answers
 
   // if a square has 0, it is empty. If it has 1, it has queen. I will
   // decide later how to backtrack with numbers
@@ -31,20 +31,20 @@ public class QueenBoard{
     return (r<0 || c<0 || r>=board.length || c>=board.length);
   }
 
-  private void solveHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
+  private boolean solveHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
     // System.out.println(this.toString());
-    if(currentRow<data.length && currentRow>-1)
+    if(currentRow<data.length)
     {
       if(currentColumn<data.length)
       {
         if(addQueen(currentRow,currentColumn))
         {
           answers[currentRow]=currentColumn;
-          solveHelper(data,currentRow+1,0,answers);
+          return solveHelper(data,currentRow+1,0,answers);
         }
         else
         {
-          solveHelper(data,currentRow,currentColumn+1,answers);
+          return solveHelper(data,currentRow,currentColumn+1,answers);
         }
       }
       else if(currentRow>0)
@@ -52,18 +52,24 @@ public class QueenBoard{
         int prevAnswer=answers[currentRow-1];
         removeQueen(currentRow-1,prevAnswer);
         answers[currentRow-1]=-1;
-        solveHelper(data,currentRow-1,prevAnswer+1,answers);
+        return solveHelper(data,currentRow-1,prevAnswer+1,answers);
+      }
+      else
+      {
+        return false;
       }
     }
-    if(currentRow>=data.length)
+    else
     {
-      listAnswers.add(listY);
-      int prevAnswer=answers[currentRow-1];
-      removeQueen(currentRow-1,prevAnswer);
-      answers[currentRow-1]=-1;
-      solveHelper(data,currentRow-1,prevAnswer+1,answers);
+      for(int i=0;i<answers.length;i++)
+      {
+        if(answers[i]==-1)
+        {
+          return false;
+        }
+      }
+      return true;
     }
-    System.out.println(this.toString());
   }
 
   private void countHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
@@ -91,7 +97,7 @@ public class QueenBoard{
     }
     if(currentRow>=data.length)
     {
-      listAnswers.add(listY);
+      count++;
       int prevAnswer=answers[currentRow-1];
       removeQueen(currentRow-1,prevAnswer);
       answers[currentRow-1]=-1;
@@ -273,20 +279,7 @@ public class QueenBoard{
     {
       answers[i]=-1;
     }
-    solveHelper(board,0,0,answers);
-    int[] firstAnswer=listAnswers.get(0);
-    for(int i=0;i<firstAnswer.length;i++)
-    {
-      if(firstAnswer[i]!=100)
-      {
-        continue;
-      }
-      else
-      {
-        return false;
-      }
-    }
-    return true;
+    return solveHelper(board,0,0,answers);
   }
 
   /**
@@ -306,11 +299,12 @@ public class QueenBoard{
         }
       }
     }
+    count=0;
     for(int i=0;i<answers.length;i++)
     {
       answers[i]=-1;
     }
-    solveHelper(board,0,0,answers);
-    return listAnswers.size();
+    countHelper(board,0,0,answers);
+    return count;
   }
 }
