@@ -5,7 +5,7 @@ public class QueenBoard{
 
   // the list of answers will have numbers from 0 to 7.
   private int[] answers;
-  // private int count;
+  private int count=0;
   // private ArrayList<int[]> listAnswers=new ArrayList<int[]>();//ArrayList of answers
 
   // if a square has 0, it is empty. If it has 1, it has queen. I will
@@ -32,7 +32,7 @@ public class QueenBoard{
   }
 
   private boolean solveHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
-    // System.out.println(this.toString());
+    System.out.println(this.toString());
     if(currentRow<data.length)
     {
       if(currentColumn<data.length)
@@ -65,7 +65,12 @@ public class QueenBoard{
     }
   }
 
-  private void countHelper(int[][] data,int currentRow,int currentColumn,int num){
+  private void countHelper(int[][] data,int currentRow,int currentColumn){
+    // System.out.println(this.toString());
+    if(currentRow>data.length || currentRow<0)
+    {
+      count=count; // because mr. k said I need somethiing to stop the recursion and I should put it in the front
+    }
     // System.out.println(count);
     if(currentRow<data.length && currentRow>-1)
     {
@@ -74,11 +79,11 @@ public class QueenBoard{
         if(addQueen(currentRow,currentColumn))
         {
           answers[currentRow]=currentColumn;
-          countHelper(data,currentRow+1,0,num);
+          countHelper(data,currentRow+1,0);
         }
         else
         {
-          countHelper(data,currentRow,currentColumn+1,num);
+          countHelper(data,currentRow,currentColumn+1);
         }
       }
       else if(currentRow>0)
@@ -86,7 +91,7 @@ public class QueenBoard{
         int prevAnswer=answers[currentRow-1];
         removeQueen(currentRow-1,prevAnswer);
         answers[currentRow-1]=-1;
-        countHelper(data,currentRow-1,prevAnswer+1,num);
+        countHelper(data,currentRow-1,prevAnswer+1);
       }
       // else
       // {
@@ -98,8 +103,8 @@ public class QueenBoard{
       int prevAnswer=answers[currentRow-1];
       removeQueen(currentRow-1,prevAnswer);
       answers[currentRow-1]=-1;
-      // count++;
-      countHelper(data,currentRow-1,prevAnswer+1,num+1);
+      count++;
+      countHelper(data,currentRow-1,prevAnswer+1);
     }
   }
 
@@ -297,8 +302,8 @@ public class QueenBoard{
         }
       }
     }
-    int count=0;
-    countHelper(board,0,0,count);
+    count=0;
+    countHelper(board,0,0);
     return count;
   }
 
