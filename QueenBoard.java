@@ -54,31 +54,42 @@ public class QueenBoard{
     }
   }
 
-  private void countHelper(int[][] data,int row,int col){
-    System.out.println(count);
+  private void countHelper(int[][] data,int row){
+    // System.out.println(count);
     System.out.println(this.toString());
     if(row>=data.length)
     {
       count++;
-      countHelper(data,row-1,answers[row-1]+1);
+      // countHelper(data,row-1,answers[row-1]+1);
     }
     else
     {
-      for(col=col;col<board.length;col++)
+      for(int col=0;col<board.length;col++)
       {
         if(addQueen(row,col))
         {
+          System.out.println("added queen at "+row+","+col);
           answers[row]=col;
-          countHelper(data,row+1,0);
-          removeQueen(row,col);
+          countHelper(data,row+1);
+          if(removeQueen(row,col))
+          {
+            System.out.println("removed queen at "+row+","+col);
+          }
+          else
+          {
+            System.out.println("failed to remove queen at "+row+","+col);
+          }
+        }
+        else
+        {
+          System.out.println("failed to add queen "+row+","+col);
         }
       }
-      if(row>=1)
-      {
-        removeQueen(row-1,answers[row-1]);
-        countHelper(data,row-1,answers[row-1]+1);
-      }
-      else{}
+      // if(row>=1)
+      // {
+      //   removeQueen(row-1,answers[row-1]);
+      //   countHelper(data,row-1,answers[row-1]+1);
+      // }
     }
   }
   // private void countHelper(int[][] data,int currentRow,int currentColumn){
@@ -87,10 +98,10 @@ public class QueenBoard{
   //   // {
   //   //   count=count; // because mr. k said I need somethiing to stop the recursion and I should put it in the front
   //   // }
-  //   // System.out.println(count);
+  //   // System.out.println(count);,int col
   //   if(currentRow<data.length && currentRow>-1)
   //   {
-  //     for(;currentColumn<data.length;currentColumn++)
+  //     if(currentColumn<data.length)
   //     {
   //       if(addQueen(currentRow,currentColumn))
   //       {
@@ -189,7 +200,7 @@ public class QueenBoard{
     }
     else
     {
-      if(board[r][c]==1)
+      if(board[r][c]!=0)
       {
         for(int n=0;n<board.length;n++)
         {
@@ -228,7 +239,7 @@ public class QueenBoard{
           p--;
           q++;
         }
-        board[r][c]+=5;
+        board[p][q]+=5;
         return true;
       }
       else
@@ -320,12 +331,13 @@ public class QueenBoard{
         }
       }
     }
+
     for(int i=0;i<answers.length;i++)
     {
       answers[i]=-1;
     }
     count=0;
-    countHelper(board,0,0);
+    countHelper(board,0);
     return count;
   }
 
