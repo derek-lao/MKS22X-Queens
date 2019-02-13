@@ -31,83 +31,101 @@ public class QueenBoard{
     return (r<0 || c<0 || r>=board.length || c>=board.length);
   }
 
-  private boolean solveHelper(int[][] data,int currentRow,int currentColumn,int[] listY){
-    System.out.println(this.toString());
-    if(currentRow<data.length)
-    {
-      if(currentColumn<data.length)
-      {
-        if(addQueen(currentRow,currentColumn))
-        {
-          answers[currentRow]=currentColumn;
-          return solveHelper(data,currentRow+1,0,answers);
-        }
-        else
-        {
-          return solveHelper(data,currentRow,currentColumn+1,answers);
-        }
-      }
-      else if(currentRow>0)
-      {
-        int prevAnswer=answers[currentRow-1];
-        removeQueen(currentRow-1,prevAnswer);
-        answers[currentRow-1]=-1;
-        return solveHelper(data,currentRow-1,prevAnswer+1,answers);
-      }
-      else
-      {
-        return false;
-      }
-    }
-    else
+  private boolean solveHelper(int[][] data,int row,int c){
+    if(row>=data.length)
     {
       return true;
     }
+    else
+    {
+      for(int col=0;col<board.length;col++)
+      {
+        if(addQueen(row,col))
+        {
+          answers[row]=col;
+          if(solveHelper(data,row+1,col))
+          {
+            return true;
+          }
+          removeQueen(row,col);
+        }
+      }
+      return false;
+    }
   }
 
-  private void countHelper(int[][] data,int currentRow,int currentColumn){
-    // System.out.println(this.toString());
-    if(currentRow>data.length || currentRow<0)
+  private void countHelper(int[][] data,int row,int col){
+    System.out.println(count);
+    System.out.println(this.toString());
+    if(row>=data.length)
     {
-      count=count; // because mr. k said I need somethiing to stop the recursion and I should put it in the front
-    }
-    // System.out.println(count);
-    if(currentRow<data.length && currentRow>-1)
-    {
-      if(currentColumn<data.length)
-      {
-        if(addQueen(currentRow,currentColumn))
-        {
-          answers[currentRow]=currentColumn;
-          countHelper(data,currentRow+1,0);
-        }
-        else
-        {
-          countHelper(data,currentRow,currentColumn+1);
-        }
-      }
-      else if(currentRow>0)
-      {
-        int prevAnswer=answers[currentRow-1];
-        removeQueen(currentRow-1,prevAnswer);
-        answers[currentRow-1]=-1;
-        countHelper(data,currentRow-1,prevAnswer+1);
-      }
-      // else
-      // {
-      //   return num;
-      // }
+      count++;
+      countHelper(data,row-1,answers[row-1]+1);
     }
     else
     {
-      int prevAnswer=answers[currentRow-1];
-      removeQueen(currentRow-1,prevAnswer);
-      answers[currentRow-1]=-1;
-      count++;
-      countHelper(data,currentRow-1,prevAnswer+1);
+      for(col=col;col<board.length;col++)
+      {
+        if(addQueen(row,col))
+        {
+          answers[row]=col;
+          countHelper(data,row+1,0);
+          removeQueen(row,col);
+        }
+      }
+      if(row>=1)
+      {
+        removeQueen(row-1,answers[row-1]);
+        countHelper(data,row-1,answers[row-1]+1);
+      }
+      else{}
     }
   }
-
+  // private void countHelper(int[][] data,int currentRow,int currentColumn){
+  //   // System.out.println(this.toString());
+  //   // if(currentRow>data.length || currentRow<0)
+  //   // {
+  //   //   count=count; // because mr. k said I need somethiing to stop the recursion and I should put it in the front
+  //   // }
+  //   // System.out.println(count);
+  //   if(currentRow<data.length && currentRow>-1)
+  //   {
+  //     for(;currentColumn<data.length;currentColumn++)
+  //     {
+  //       if(addQueen(currentRow,currentColumn))
+  //       {
+  //         answers[currentRow]=currentColumn;
+  //         countHelper(data,currentRow+1,0);
+  //       }
+  //       else
+  //       {
+  //         countHelper(data,currentRow,currentColumn+1);
+  //       }
+  //     }
+  //     if(currentRow>0)
+  //     {
+  //       int prevAnswer=answers[currentRow-1];
+  //       removeQueen(currentRow-1,prevAnswer);
+  //       answers[currentRow-1]=-1;
+  //       countHelper(data,currentRow-1,prevAnswer+1);
+  //     }
+  //     // else
+  //     // {
+  //     //   return num;
+  //     // }
+  //   }
+  //   else
+  //   {
+  //     int prevAnswer=answers[currentRow-1];
+  //     removeQueen(currentRow-1,prevAnswer);
+  //     answers[currentRow-1]=-1;
+  //     count++;
+  //     countHelper(data,currentRow-1,prevAnswer+1);
+  //   }
+  // }
+  //
+  //
+  //
   private boolean addQueen(int r, int c){
     if(outOfBounds(r,c))
     {
@@ -282,7 +300,7 @@ public class QueenBoard{
     {
       answers[i]=-1;
     }
-    return solveHelper(board,0,0,answers);
+    return solveHelper(board,0,0);
   }
 
   /**
@@ -301,6 +319,10 @@ public class QueenBoard{
           throw new IllegalStateException();
         }
       }
+    }
+    for(int i=0;i<answers.length;i++)
+    {
+      answers[i]=-1;
     }
     count=0;
     countHelper(board,0,0);
