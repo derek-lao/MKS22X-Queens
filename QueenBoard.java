@@ -37,7 +37,7 @@ public class QueenBoard{
 
 
   private boolean solveHelper(int[][] data,int row){
-    System.out.println(this.toString());
+    // System.out.println(this.toTest());
     if(row>=data.length)
     {
       return true;
@@ -57,6 +57,7 @@ public class QueenBoard{
           if(removeQueen(row,col))
           {
             System.out.println("removed queen successfully at "+row+","+col);
+            // System.out.println(this.toTest());
           }
           else
           {
@@ -195,7 +196,7 @@ public class QueenBoard{
     {
       return false;
     }
-    if(board[r][c]>=1)
+    if(board[r][c]==-10)
     {
       for(int p=0; p<board.length; p++)
       {
@@ -243,6 +244,26 @@ public class QueenBoard{
         else
         {
           stuff+="_ ";
+        }
+      }
+      stuff+="\n";
+    }
+    return stuff;
+  }
+
+  public String toTest(){
+    String stuff="";
+    for(int r=0; r<board.length; r++)
+    {
+      for(int c=0; c<board.length; c++)
+      {
+        if(board[r][c]==-10)
+        {
+          stuff+="-9 ";
+        }
+        else
+        {
+          stuff+=board[r][c]+" ";
         }
       }
       stuff+="\n";

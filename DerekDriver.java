@@ -20,6 +20,8 @@ public class DerekDriver{
     z.countSolutions();
     System.out.println("Below is the final board");
     System.out.println(z.toString());
+    z.clear();
+    System.out.println("Number of solutions: "+z.countSolutions());
     //
     // QueenBoard z=new QueenBoard(5);
     // z.solve();
