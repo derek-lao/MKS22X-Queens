@@ -56,6 +56,7 @@ public class QueenBoard{
           }
           if(removeQueen(row,col))
           {
+            answers[row]=-1;
             // System.out.println("removed queen successfully at "+row+","+col);
             // System.out.println(this.toTest());
           }
@@ -114,7 +115,7 @@ public class QueenBoard{
     if(row>=data.length)
     {
       count++;
-      System.out.println("THE COUNT HAS BEEN CHANGED, IT IS NOW "+count);
+      // System.out.println("THE COUNT HAS BEEN CHANGED, IT IS NOW "+count);
       // countHelper(data,row-1,answers[row-1]+1);
     }
     else
@@ -123,23 +124,24 @@ public class QueenBoard{
       {
         if(addQueen(row,col))
         {
-          System.out.println("added queen at "+row+","+col);
-          System.out.println(this.toString());
+          // System.out.println("added queen at "+row+","+col);
+          // System.out.println(this.toString());
           answers[row]=col;
           countHelper(data,row+1);
           if(removeQueen(row,col))
           {
-            System.out.println("removed queen at "+row+","+col);
-            System.out.println(this.toString());
+            answers[row]=-1;
+            // System.out.println("removed queen at "+row+","+col);
+            // System.out.println(this.toString());
           }
           else
           {
-            System.out.println("failed to remove queen at "+row+","+col);
+            // System.out.println("failed to remove queen at "+row+","+col);
           }
         }
         else
         {
-          System.out.println("failed to add queen "+row+","+col);
+          // System.out.println("failed to add queen "+row+","+col);
         }
       }
     }
