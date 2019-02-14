@@ -115,7 +115,7 @@ public class QueenBoard{
     if(row>=data.length)
     {
       count++;
-      // System.out.println("THE COUNT HAS BEEN CHANGED, IT IS NOW "+count);
+      // System.out.println("THE COUNT HAS BEEN CHANGEDD, IT IS NOW "+count);
       // countHelper(data,row-1,answers[row-1]+1);
     }
     else
@@ -182,7 +182,7 @@ public class QueenBoard{
     }
     if(board[r][c]==0)
     {
-      for(int p=0; p<board.length; p++)
+      for(int p=r; p<board.length; p++)
       {
         for(int q=0; q<board.length; q++)
         {
@@ -203,7 +203,7 @@ public class QueenBoard{
     }
     if(board[r][c]==-10)
     {
-      for(int p=0; p<board.length; p++)
+      for(int p=r; p<board.length; p++)
       {
         for(int q=0; q<board.length; q++)
         {

@@ -1,6 +1,13 @@
 public class DerekDriver{
   public static void main(String[] args)
   {
+    // QueenBoard z=new QueenBoard(1);
+    // z.solve();
+    // System.out.println(z.toString());
+    // z.clear();
+    // System.out.println("Number of solutions: "+z.countSolutions());
+    //
+    //
     // QueenBoard thing=new QueenBoard(3);
     // thing.solve();
     // System.out.println(thing.toString());
@@ -37,10 +44,16 @@ public class DerekDriver{
     // z.clear();
     // System.out.println("The number of solutions: "+z.countSolutions());
 
-    QueenBoard actual=new QueenBoard(8);
-    actual.solve();
-    System.out.println(actual.toString());
-    actual.clear();
-    System.out.println("The number of solutions: "+actual.countSolutions());
+    // QueenBoard actual=new QueenBoard(8);
+    // actual.solve();
+    // System.out.println(actual.toString());
+    // actual.clear();
+    // System.out.println("The number of solutions: "+actual.countSolutions());
+
+    QueenBoard z=new QueenBoard(14);
+    z.solve();
+    System.out.println(z.toString());
+    z.clear();
+    System.out.println("Number of solutions: "+z.countSolutions());
   }
 }
