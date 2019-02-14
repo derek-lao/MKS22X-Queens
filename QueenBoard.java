@@ -171,12 +171,13 @@ public class QueenBoard{
       {
         for(int q=0; q<board.length; q++)
         {
-          if (p == r || q == c || (Math.abs(p -c)  == Math.abs(q - r)))
+          if (p == r || q == c || (Math.abs(p - r)  == Math.abs(q - c)))
           board[p][q]++;
         }
       }
+      return true;
     }
-    return true;
+    return false;
   }
 
   private boolean removeQueen(int r, int c){
@@ -190,12 +191,13 @@ public class QueenBoard{
       {
         for(int q=0; q<board.length; q++)
         {
-          if (p == r || q == c || (Math.abs(p -c)  == Math.abs(q - r)))
+          if (p == r || q == c || (Math.abs(p - r)  == Math.abs(q - c)))
           board[p][q]--;
         }
       }
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**
