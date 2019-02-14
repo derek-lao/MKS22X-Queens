@@ -17,15 +17,15 @@ public class QueenBoard{
    */
   public QueenBoard(int size){
     board=new int[size][size];
-    for(int r=0;r<board.length;r++)
+    for(int r=0; r<board.length; r++)
     {
-      for(int c=0;c<board.length;c++)
+      for(int c=0; c<board.length; c++)
       {
         board[r][c]=0;
       }
     }
     answers=new int[board.length];
-    for(int i=0;i<board.length;i++)
+    for(int i=0; i<board.length; i++)
     {
       answers[i]=-1;
     }
@@ -43,7 +43,7 @@ public class QueenBoard{
     }
     else
     {
-      for(int col=0;col<board.length;col++)
+      for(int col=0; col<board.length; col++)
       {
         if(addQueen(row,col))
         {
@@ -77,9 +77,9 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public boolean solve() throws IllegalStateException{
-    for(int r=0;r<board.length;r++)
+    for(int r=0; r<board.length; r++)
     {
-      for(int c=0;c<board.length;c++)
+      for(int c=0; c<board.length; c++)
       {
         if(board[r][c]!=0)
         {
@@ -89,7 +89,7 @@ public class QueenBoard{
         }
       }
     }
-    for(int i=0;i<answers.length;i++)
+    for(int i=0; i<answers.length; i++)
     {
       answers[i]=-1;
     }
@@ -137,9 +137,9 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public int countSolutions() throws IllegalStateException{
-    for(int r=0;r<board.length;r++)
+    for(int r=0; r<board.length; r++)
     {
-      for(int c=0;c<board.length;c++)
+      for(int c=0; c<board.length; c++)
       {
         if(board[r][c]!=0)
         {
@@ -170,7 +170,7 @@ public class QueenBoard{
       {
         int p=r;
         int q=c;
-        while(p<board.length&&q<board.length)
+        while(p<board.length && q<board.length)
         {
           board[p][c]++;
           board[p][q]++;
@@ -179,7 +179,7 @@ public class QueenBoard{
         }
         p=r;
         q=c;
-        while(p<board.length&&q>-1)
+        while(p<board.length && q>-1)
         {
           board[p][q]++;
           p++;
@@ -208,7 +208,7 @@ public class QueenBoard{
       {
         int p=r;
         int q=c;
-        while(p<board.length&&q<board.length)
+        while(p<board.length && q<board.length)
         {
           board[p][c]--;
           board[p][q]--;
@@ -217,7 +217,7 @@ public class QueenBoard{
         }
         p=r;
         q=c;
-        while(p<board.length&&q>-1)
+        while(p<board.length && q>-1)
         {
           board[p][q]--;
           p++;
@@ -249,16 +249,16 @@ public class QueenBoard{
   */
   public String toString(){
     String stuff="";
-    for(int i=0;i<board.length;i++)
+    for(int i=0; i<board.length; i++)
     {
-      if(answers[i]<board.length&&answers[i]>=0)
+      if(answers[i]<board.length && answers[i]>=0)
       {
         board[i][answers[i]]=-10;
       }
     }
-    for(int r=0;r<board.length;r++)
+    for(int r=0; r<board.length; r++)
     {
-      for(int c=0;c<board.length;c++)
+      for(int c=0; c<board.length; c++)
       {
         if(board[r][c]==-10)
         {
@@ -274,12 +274,6 @@ public class QueenBoard{
     return stuff;
   }
 
-
-
-
-
-
-
   public void clear(){
     for(int r=0;r<board.length;r++)
     {
@@ -290,14 +284,4 @@ public class QueenBoard{
     }
   }
 
-  public static void main(String[] args){
-    QueenBoard stuff=new QueenBoard(3);
-    System.out.println(stuff.toString());
-    System.out.println(stuff.addQueen(1,1));
-    System.out.println("added queen at 1,1");
-    System.out.println(stuff.toString());
-    System.out.println(stuff.removeQueen(1,1));
-    System.out.println("removed queen at 1,1");
-    System.out.println(stuff.toString());
-  }
 }
