@@ -25,13 +25,18 @@ public class QueenBoard{
       }
     }
     answers=new int[board.length];
+    for(int i=0;i<board.length;i++)
+    {
+      answers[i]=-1;
+    }
   }
 
   private boolean outOfBounds(int r,int c){
     return (r<0 || c<0 || r>=board.length || c>=board.length);
   }
 
-  private boolean solveHelper(int[][] data,int row,int c){
+  private boolean solveHelper(int[][] data,int row){
+    System.out.println(this.toString());
     if(row>=data.length)
     {
       return true;
@@ -43,7 +48,7 @@ public class QueenBoard{
         if(addQueen(row,col))
         {
           answers[row]=col;
-          if(solveHelper(data,row+1,col))
+          if(solveHelper(data,row+1))
           {
             return true;
           }
@@ -53,6 +58,33 @@ public class QueenBoard{
       return false;
     }
   }
+
+  /**
+  *@return false when the board is not solveable and leaves the board filled with zeros;
+  *        true when the board is solveable, and leaves the board in a solved state
+  *@throws IllegalStateException when the board starts with any non-zero value
+  */
+  public boolean solve() throws IllegalStateException{
+    for(int r=0;r<board.length;r++)
+    {
+      for(int c=0;c<board.length;c++)
+      {
+        if(board[r][c]!=0)
+        {
+          r=board.length;
+          c=board.length;
+          throw new IllegalStateException();
+        }
+      }
+    }
+    for(int i=0;i<answers.length;i++)
+    {
+      answers[i]=-1;
+    }
+    return solveHelper(board,0);
+  }
+
+
 
   private void countHelper(int[][] data,int row){
     // System.out.println(count);
@@ -85,58 +117,36 @@ public class QueenBoard{
           System.out.println("failed to add queen "+row+","+col);
         }
       }
-      // if(row>=1)
-      // {
-      //   removeQueen(row-1,answers[row-1]);
-      //   countHelper(data,row-1,answers[row-1]+1);
-      // }
     }
   }
-  // private void countHelper(int[][] data,int currentRow,int currentColumn){
-  //   // System.out.println(this.toString());
-  //   // if(currentRow>data.length || currentRow<0)
-  //   // {
-  //   //   count=count; // because mr. k said I need somethiing to stop the recursion and I should put it in the front
-  //   // }
-  //   // System.out.println(count);,int col
-  //   if(currentRow<data.length && currentRow>-1)
-  //   {
-  //     if(currentColumn<data.length)
-  //     {
-  //       if(addQueen(currentRow,currentColumn))
-  //       {
-  //         answers[currentRow]=currentColumn;
-  //         countHelper(data,currentRow+1,0);
-  //       }
-  //       else
-  //       {
-  //         countHelper(data,currentRow,currentColumn+1);
-  //       }
-  //     }
-  //     if(currentRow>0)
-  //     {
-  //       int prevAnswer=answers[currentRow-1];
-  //       removeQueen(currentRow-1,prevAnswer);
-  //       answers[currentRow-1]=-1;
-  //       countHelper(data,currentRow-1,prevAnswer+1);
-  //     }
-  //     // else
-  //     // {
-  //     //   return num;
-  //     // }
-  //   }
-  //   else
-  //   {
-  //     int prevAnswer=answers[currentRow-1];
-  //     removeQueen(currentRow-1,prevAnswer);
-  //     answers[currentRow-1]=-1;
-  //     count++;
-  //     countHelper(data,currentRow-1,prevAnswer+1);
-  //   }
-  // }
-  //
-  //
-  //
+
+  /**
+  *@return the number of solutions found, and leaves the board filled with only 0's
+  *@throws IllegalStateException when the board starts with any non-zero value
+  */
+  public int countSolutions() throws IllegalStateException{
+    for(int r=0;r<board.length;r++)
+    {
+      for(int c=0;c<board.length;c++)
+      {
+        if(board[r][c]!=0)
+        {
+          r=board.length;
+          c=board.length;
+          throw new IllegalStateException();
+        }
+      }
+    }
+
+    for(int i=0;i<answers.length;i++)
+    {
+      answers[i]=-1;
+    }
+    count=0;
+    countHelper(board,0);
+    return count;
+  }
+
   private boolean addQueen(int r, int c){
     if(outOfBounds(r,c))
     {
@@ -146,30 +156,18 @@ public class QueenBoard{
     {
       if(board[r][c]==0)
       {
-        for(int n=0;n<board.length;n++)
-        {
-          board[r][n]++;
-          board[n][c]++;
-        }
         int p=r;
         int q=c;
-        while(p<board.length && q<board.length)
+        while(p<board.length&&q<board.length)
         {
+          board[p][c]++;
           board[p][q]++;
           p++;
           q++;
         }
         p=r;
         q=c;
-        while(p>-1&&q>-1)
-        {
-          board[p][q]++;
-          p--;
-          q--;
-        }
-        p=r;
-        q=c;
-        while(p<board.length && q>-1)
+        while(p<board.length&&q>-1)
         {
           board[p][q]++;
           p++;
@@ -177,13 +175,7 @@ public class QueenBoard{
         }
         p=r;
         q=c;
-        while(p>-1 && q<board.length)
-        {
-          board[p][q]++;
-          p--;
-          q++;
-        }
-        board[r][c]-=5;
+        board[p][q]=-10;
         return true;
       }
       else
@@ -200,32 +192,20 @@ public class QueenBoard{
     }
     else
     {
-      if(board[r][c]!=0)
+      if(board[r][c]==0)
       {
-        for(int n=0;n<board.length;n++)
-        {
-          board[r][n]--;
-          board[n][c]--;
-        }
         int p=r;
         int q=c;
-        while(p<board.length && q<board.length)
+        while(p<board.length&&q<board.length)
         {
+          board[p][c]--;
           board[p][q]--;
           p++;
           q++;
         }
         p=r;
         q=c;
-        while(p>-1&&q>-1)
-        {
-          board[p][q]--;
-          p--;
-          q--;
-        }
-        p=r;
-        q=c;
-        while(p<board.length && q>-1)
+        while(p<board.length&&q>-1)
         {
           board[p][q]--;
           p++;
@@ -233,13 +213,7 @@ public class QueenBoard{
         }
         p=r;
         q=c;
-        while(p>-1 && q<board.length)
-        {
-          board[p][q]--;
-          p--;
-          q++;
-        }
-        board[p][q]+=5;
+        board[p][q]=0;
         return true;
       }
       else
@@ -289,57 +263,10 @@ public class QueenBoard{
   }
 
 
-  /**
-  *@return false when the board is not solveable and leaves the board filled with zeros;
-  *        true when the board is solveable, and leaves the board in a solved state
-  *@throws IllegalStateException when the board starts with any non-zero value
-  */
-  public boolean solve() throws IllegalStateException{
-    for(int r=0;r<board.length;r++)
-    {
-      for(int c=0;c<board.length;c++)
-      {
-        if(board[r][c]!=0)
-        {
-          r=board.length;
-          c=board.length;
-          throw new IllegalStateException();
-        }
-      }
-    }
-    for(int i=0;i<answers.length;i++)
-    {
-      answers[i]=-1;
-    }
-    return solveHelper(board,0,0);
-  }
 
-  /**
-  *@return the number of solutions found, and leaves the board filled with only 0's
-  *@throws IllegalStateException when the board starts with any non-zero value
-  */
-  public int countSolutions() throws IllegalStateException{
-    for(int r=0;r<board.length;r++)
-    {
-      for(int c=0;c<board.length;c++)
-      {
-        if(board[r][c]!=0)
-        {
-          r=board.length;
-          c=board.length;
-          throw new IllegalStateException();
-        }
-      }
-    }
 
-    for(int i=0;i<answers.length;i++)
-    {
-      answers[i]=-1;
-    }
-    count=0;
-    countHelper(board,0);
-    return count;
-  }
+
+
 
   public void clear(){
     for(int r=0;r<board.length;r++)
@@ -349,5 +276,16 @@ public class QueenBoard{
         board[r][c]=0;
       }
     }
+  }
+
+  public static void main(String[] args){
+    QueenBoard stuff=new QueenBoard(3);
+    System.out.println(stuff.toString());
+    System.out.println(stuff.addQueen(1,1));
+    System.out.println("added queen at 1,1");
+    System.out.println(stuff.toString());
+    System.out.println(stuff.removeQueen(1,1));
+    System.out.println("removed queen at 1,1");
+    System.out.println(stuff.toString());
   }
 }
