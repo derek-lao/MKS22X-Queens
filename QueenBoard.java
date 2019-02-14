@@ -94,7 +94,15 @@ public class QueenBoard{
     {
       answers[i]=-1;
     }
-    return solveHelper(board,0);
+    if(solveHelper(board,0))
+    {
+      return true;
+    }
+    else
+    {
+      clear();
+      return false;
+    }
   }
 
 
@@ -157,6 +165,7 @@ public class QueenBoard{
     }
     count=0;
     countHelper(board,0);
+    clear();
     return count;
   }
 
