@@ -164,34 +164,31 @@ public class QueenBoard{
     {
       return false;
     }
-    else
+    if(board[r][c]==0)
     {
-      if(board[r][c]==0)
+      int p=r;
+      int q=c;
+      while(p<board.length && q<board.length)
       {
-        int p=r;
-        int q=c;
-        while(p<board.length && q<board.length)
-        {
-          board[p][c]++;
-          board[p][q]++;
-          p++;
-          q++;
-        }
-        p=r;
-        q=c;
-        while(p<board.length && q>-1)
-        {
-          board[p][q]++;
-          p++;
-          q--;
-        }
-        p=r;
-        q=c;
-        board[p][q]=-10;
-        return true;
+        board[p][c]++;
+        board[p][q]++;
+        p++;
+        q++;
       }
-      return false;
+      p=r;
+      q=c;
+      while(p<board.length && q>-1)
+      {
+        board[p][q]++;
+        p++;
+        q--;
+      }
+      p=r;
+      q=c;
+      board[p][q]=-10;
+      return true;
     }
+    return false;
   }
 
   private boolean removeQueen(int r, int c){
@@ -199,34 +196,31 @@ public class QueenBoard{
     {
       return false;
     }
-    else
+    if(board[r][c]==-10)
     {
-      if(board[r][c]==-10)
+      int p=r;
+      int q=c;
+      while(p<board.length && q<board.length)
       {
-        int p=r;
-        int q=c;
-        while(p<board.length && q<board.length)
-        {
-          board[p][c]--;
-          board[p][q]--;
-          p++;
-          q++;
-        }
-        p=r;
-        q=c;
-        while(p<board.length && q>-1)
-        {
-          board[p][q]--;
-          p++;
-          q--;
-        }
-        p=r;
-        q=c;
-        board[p][q]=0;
-        return true;
+        board[p][c]--;
+        board[p][q]--;
+        p++;
+        q++;
       }
-      return false;
+      p=r;
+      q=c;
+      while(p<board.length && q>-1)
+      {
+        board[p][q]--;
+        p++;
+        q--;
+      }
+      p=r;
+      q=c;
+      board[p][q]=0;
+      return true;
     }
+    return false;
   }
 
   /**
