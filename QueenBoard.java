@@ -185,7 +185,7 @@ public class QueenBoard{
     {
       return false;
     }
-    if(board[r][c]==1)
+    if(board[r][c]>=1)
     {
       for(int p=0; p<board.length; p++)
       {
