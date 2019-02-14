@@ -35,6 +35,7 @@ public class QueenBoard{
     return (r<0 || c<0 || r>=board.length || c>=board.length);
   }
 
+
   private boolean solveHelper(int[][] data,int row){
     System.out.println(this.toString());
     if(row>=data.length)
@@ -166,29 +167,16 @@ public class QueenBoard{
     }
     if(board[r][c]==0)
     {
-      int p=r;
-      int q=c;
-      while(p<board.length && q<board.length)
+      for(int p=0; p<board.length; p++)
       {
-        board[p][c]++;
-        board[p][q]++;
-        p++;
-        q++;
+        for(int q=0; q<board.length; q++)
+        {
+          if (p == r || q == c || (Math.abs(p -c)  == Math.abs(q - r)))
+          board[p][q]++;
+        }
       }
-      p=r;
-      q=c;
-      while(p<board.length && q>-1)
-      {
-        board[p][q]++;
-        p++;
-        q--;
-      }
-      p=r;
-      q=c;
-      board[p][q]=-10;
-      return true;
     }
-    return false;
+    return true;
   }
 
   private boolean removeQueen(int r, int c){
@@ -196,31 +184,18 @@ public class QueenBoard{
     {
       return false;
     }
-    if(board[r][c]==-10)
+    if(board[r][c]==1)
     {
-      int p=r;
-      int q=c;
-      while(p<board.length && q<board.length)
+      for(int p=0; p<board.length; p++)
       {
-        board[p][c]--;
-        board[p][q]--;
-        p++;
-        q++;
+        for(int q=0; q<board.length; q++)
+        {
+          if (p == r || q == c || (Math.abs(p -c)  == Math.abs(q - r)))
+          board[p][q]--;
+        }
       }
-      p=r;
-      q=c;
-      while(p<board.length && q>-1)
-      {
-        board[p][q]--;
-        p++;
-        q--;
-      }
-      p=r;
-      q=c;
-      board[p][q]=0;
-      return true;
     }
-    return false;
+    return true;
   }
 
   /**
