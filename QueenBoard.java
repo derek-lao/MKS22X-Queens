@@ -3,12 +3,12 @@ import java.util.*;
 public class QueenBoard{
   private int[][] board;
 
-  // the list of answers will have numbers from 0 to 7.
+  // the list of answers will have numbers from 0 to boardsize-1.
   private int[] answers;
   private int count=0;
   // private ArrayList<int[]> listAnswers=new ArrayList<int[]>();//ArrayList of answers
 
-  // if a square has 0, it is empty. If it has 1, it has queen. I will
+  // if a square has 0, it is empty. If it has -10, it has queen. I will
   // decide later how to backtrack with numbers
 
   /**
@@ -190,10 +190,7 @@ public class QueenBoard{
         board[p][q]=-10;
         return true;
       }
-      else
-      {
-        return false;
-      }
+      return false;
     }
   }
 
@@ -228,10 +225,7 @@ public class QueenBoard{
         board[p][q]=0;
         return true;
       }
-      else
-      {
-        return false;
-      }
+      return false;
     }
   }
 
