@@ -184,6 +184,7 @@ public class QueenBoard{
           board[p][q]++;
         }
       }
+      board[r][c]=-10;
       return true;
     }
     return false;
@@ -204,6 +205,7 @@ public class QueenBoard{
           board[p][q]--;
         }
       }
+      board[r][c]=0;
       return true;
     }
     return false;
