@@ -47,12 +47,24 @@ public class QueenBoard{
       {
         if(addQueen(row,col))
         {
+          System.out.println("added queen successfully at "+row+","+col);
           answers[row]=col;
           if(solveHelper(data,row+1))
           {
             return true;
           }
-          removeQueen(row,col);
+          if(removeQueen(row,col))
+          {
+            System.out.println("removed queen successfully at "+row+","+col);
+          }
+          else
+          {
+            System.out.println("Failed to remove queen at "+row+","+col);
+          }
+        }
+        else
+        {
+          System.out.println("Failed to add queen at "+row+","+col);
         }
       }
       return false;
@@ -192,7 +204,7 @@ public class QueenBoard{
     }
     else
     {
-      if(board[r][c]==0)
+      if(board[r][c]==-10)
       {
         int p=r;
         int q=c;
